@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redistest
+  template:
+   metadata:
+    labels:
+      component: redistest
+   spec:
+    volumes:
+     - name: redis-pv
+       persistentVolumeClaim:
+         claimName: redis-pvc     
+    containers:
+    - name: redis-test
+      image: redis
+      ports:
+       - containerPort: 6379
+      volumeMounts:
+        - name: redis-pv
+          mountPath: /data                    
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cluster-service
+spec:
+  type: ClusterIP
+  ports:
+   - port: 6379
+     targetPort: 6379
+  selector:
+      component: redistest 

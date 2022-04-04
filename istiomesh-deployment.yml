@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istiomesh-deployment
+spec:
+   replicas: 1
+   selector:
+    matchLabels:
+     app: istiomesh  
+   template:
+     metadata:
+      labels:
+       app: istiomesh 
+     spec:   
+      containers:
+      - name: istiomesh-containers
+        image: kishanaduka/istiomesh
+        ports:
+        - containerPort: 8090

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web2	
+  template:
+   metadata:
+    labels:
+      component: web2
+   spec:
+    containers:
+    - name: k8s2demo
+      image: kishanaduka/k8s2
+      ports:
+       - containerPort: 8060
+      env:
+       - name: REDIS_HOST
+         value: redis-cluster-service
+       - name: REDIS_PORT
+         value: '6379' 
+       - name: DBPASSWORD
+         valueFrom:
+          secretKeyRef:
+           name: k8s-secret
+           key: dbpassword
+                   
+         
