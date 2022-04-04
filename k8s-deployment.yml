@@ -14,6 +14,6 @@ spec:
    spec:
     containers:
     - name: k8sdemo
-      image: kishanaduka/k8s-demo
+      image: nginx
       ports:
        - containerPort: 8090
